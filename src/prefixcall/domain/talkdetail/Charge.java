@@ -1,5 +1,8 @@
 package prefixcall.domain.talkdetail;
 
+/**
+ * @author s-murakami
+ */
 public final class Charge {
 	
 	private final int charge;

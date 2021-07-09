@@ -3,8 +3,11 @@ package prefixcall.domain.prefixcall;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import prefixcall.domain.contructor.ContructorId;
+import prefixcall.domain.prefixcall.ContructorId;
 
+/**
+ * @author s-murakami
+ */
 public class Prefixcall {
 	
 	// ===================================================================================
@@ -14,7 +17,7 @@ public class Prefixcall {
 	private final ContructorId contructorId;
 	private final Msisdn msisdn;
 	private Plan plan;
-	private LocalDateTime applyDateTime;
+	private final LocalDateTime applyDateTime;
 	private PrefixcallStatus status;
 	private Plan nextPlan;
 	private LocalDate planChangeDate;
@@ -34,13 +37,13 @@ public class Prefixcall {
 	}
 	
 	// ===================================================================================
-    //                                                                        Domain Event
-    //                                                                        ============
+    //                                                                            Behavior
+    //                                                                            ========
 	/**
 	 * プラン変更を予約する
 	 * @param plan 変更予定のプラン
 	 */
-	void reservePlanChange(Plan plan) {
+	public void reservePlanChange(Plan plan) {
 		this.nextPlan = plan;
 		this.planChangeDate = LocalDate.now().plusMonths(1).withDayOfMonth(1); // プランによって月初か月末にかわるが一旦月初適用とする
 	}
@@ -48,10 +51,31 @@ public class Prefixcall {
 	/**
 	 * プラン変更を適用する
 	 */
-	void confirmPlanChange() {
+	public void applyPlanChange() {
 		this.plan = this.nextPlan;
 		this.nextPlan = null;
 		this.planChangeDate = null;
+	}
+	
+	/**
+	 * 利用開始する
+	 */
+	public void useStart() {
+		this.status = PrefixcallStatus.RUNNING;
+	}
+	
+	/**
+	 * 解約する
+	 */
+	void terminate() {
+		this.status = PrefixcallStatus.TERMINATED;
+	}
+	
+	/**
+	 * キャンセルする
+	 */
+	void cancel() {
+		this.status = PrefixcallStatus.CANCELD;
 	}
 	
 	// ===================================================================================
@@ -122,17 +146,5 @@ public class Prefixcall {
 
 	public LocalDate getPlanChangeDate() {
 		return planChangeDate;
-	}
-	
-	public void terminate() {
-		this.status = PrefixcallStatus.TERMINATED;
-	}
-	
-	public void cancel() {
-		this.status = PrefixcallStatus.CANCELD;
-	}
-	
-	public void useStart() {
-		this.status = PrefixcallStatus.RUNNING;
 	}
 }

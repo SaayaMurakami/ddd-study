@@ -1,5 +1,8 @@
 package prefixcall.domain.prefixcall;
 
+/**
+ * @author s-murakami
+ */
 public final class PrefixcallId {
 
 	private final long id;

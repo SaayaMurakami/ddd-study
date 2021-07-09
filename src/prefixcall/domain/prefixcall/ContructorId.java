@@ -1,5 +1,8 @@
-package prefixcall.domain.contructor;
+package prefixcall.domain.prefixcall;
 
+/**
+ * @author s-murakami
+ */
 public final class ContructorId {
 
 	private final long constructorId;

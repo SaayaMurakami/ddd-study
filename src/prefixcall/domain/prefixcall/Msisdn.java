@@ -1,5 +1,8 @@
 package prefixcall.domain.prefixcall;
 
+/**
+ * @author s-murakami
+ */
 public final class Msisdn {
 	
 	private static final String REGEX = "0[789]0[0-9]{8}";

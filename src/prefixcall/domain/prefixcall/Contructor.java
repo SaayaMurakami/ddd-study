@@ -1,43 +1,47 @@
-package prefixcall.domain.contructor;
+package prefixcall.domain.prefixcall;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import prefixcall.domain.prefixcall.Prefixcall;
-import prefixcall.domain.prefixcall.PrefixcallStatus;
-
+/**
+ * @author s-murakami
+ */
 public class Contructor {
 
 	// ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
 	private final ContructorId contructorId;
-	private List<Prefixcall>  prefixcalls;
+	private final List<Prefixcall>  prefixcalls; // finalつけた
 
 	// ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-	public Contructor(ContructorId contructorId) {
+	public Contructor() {
 		this.contructorId = issueId();
 		this.prefixcalls = new ArrayList<Prefixcall>();
 	}
 
 	// ===================================================================================
-    //                                                                        Domain Event
-    //                                                                        ============
+    //                                                                        　　 Behavior
+    //                                                                            ========
 	/**
 	 * プレフィックスコールを申し込む
 	 * @param prefixcall プレフィックスコール
 	 */
 	public void apply(Prefixcall prefixcall) {
-		if (0 == prefixcalls.stream() //
+		if (同じ電話番号で有効なプレフィックスコールが存在するか(prefixcall)) {
+			throw new IllegalStateException("1電話番号につき有効なプレフィックスコールは1つまで。prefixCall: " + prefixcall);
+		} 
+		prefixcalls.add(prefixcall);
+	}
+
+	private boolean 同じ電話番号で有効なプレフィックスコールが存在するか(Prefixcall prefixcall) {
+		return prefixcalls.stream() //
 				.filter(prefix -> prefix.getMsisdn().equals(prefixcall.getMsisdn())) //
 				.filter(prefix -> isActive(prefix)) //
-				.count()) {
-			prefixcalls.add(prefixcall);
-		} else {
-			throw new IllegalStateException("1電話番号につき有効なプレフィックスコールは1つまで。prefixCall: " + prefixcall);
-		}
+				.findAny()
+				.isPresent();
 	}
 	
 	/**
@@ -45,6 +49,8 @@ public class Contructor {
 	 * @param prefixcall プレフィックスコール
 	 */
 	public void terminate(Prefixcall prefixcall) {
+		// TODO 契約者に紐付いたプレフィックスコールかどうかチェックする
+		// TODO リストで持っているプレフィックスコールが上書きされていない！
 		prefixcall.terminate();
 	}
 	

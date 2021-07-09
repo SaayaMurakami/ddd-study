@@ -1,5 +1,8 @@
 package prefixcall.domain.talkdetail;
 
+/**
+ * @author s-murakami
+ */
 public final class TalkDetailId {
 	
 	private final long id;

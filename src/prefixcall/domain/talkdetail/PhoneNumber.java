@@ -1,5 +1,8 @@
 package prefixcall.domain.talkdetail;
 
+/**
+ * @author s-murakami
+ */
 public final class PhoneNumber {
 	
 	private static final String REGEX = "[0-9]{10}|[0-9]{11}";

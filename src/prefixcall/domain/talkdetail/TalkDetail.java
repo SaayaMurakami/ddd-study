@@ -5,6 +5,9 @@ import java.time.YearMonth;
 import prefixcall.domain.prefixcall.Msisdn;
 import prefixcall.domain.prefixcall.PrefixcallId;
 
+/**
+ * @author s-murakami
+ */
 public class TalkDetail {
 
 	private final TalkDetailId callDetailId;

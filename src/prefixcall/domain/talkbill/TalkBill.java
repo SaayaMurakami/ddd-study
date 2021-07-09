@@ -2,10 +2,13 @@ package prefixcall.domain.talkbill;
 
 import java.time.YearMonth;
 
-import prefixcall.domain.contructor.ContructorId;
+import prefixcall.domain.prefixcall.ContructorId;
 import prefixcall.domain.talkdetail.Charge;
 import prefixcall.domain.talkdetail.TalkCategory;
 
+/**
+ * @author s-murakami
+ */
 public class TalkBill {
 	
 	private final TalkBillId talkBillId;
