@@ -25,8 +25,8 @@ public class Prefixcall {
 	// ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-	public Prefixcall(ContructorId contructorId, Msisdn msisdn, Plan plan, LocalDateTime applyDateTime, PrefixcallStatus status, Plan nextPlan, LocalDate planChangDate) {
-		this.prefixcallId = issueId();
+	public Prefixcall(PrefixcallId prefixcallId, ContructorId contructorId, Msisdn msisdn, Plan plan, LocalDateTime applyDateTime, PrefixcallStatus status, Plan nextPlan, LocalDate planChangDate) {
+		this.prefixcallId = prefixcallId;
 		this.contructorId = contructorId;
 		this.msisdn = msisdn;
 		this.plan = plan;
@@ -43,7 +43,7 @@ public class Prefixcall {
 	 * プラン変更を予約する
 	 * @param plan 変更予定のプラン
 	 */
-	public void reservePlanChange(Plan plan) {
+	void reservePlanChange(Plan plan) {
 		this.nextPlan = plan;
 		this.planChangeDate = LocalDate.now().plusMonths(1).withDayOfMonth(1); // プランによって月初か月末にかわるが一旦月初適用とする
 	}
@@ -51,7 +51,7 @@ public class Prefixcall {
 	/**
 	 * プラン変更を適用する
 	 */
-	public void applyPlanChange() {
+	void applyPlanChange() {
 		this.plan = this.nextPlan;
 		this.nextPlan = null;
 		this.planChangeDate = null;
@@ -60,7 +60,7 @@ public class Prefixcall {
 	/**
 	 * 利用開始する
 	 */
-	public void useStart() {
+	void useStart() {
 		this.status = PrefixcallStatus.RUNNING;
 	}
 	
@@ -76,13 +76,6 @@ public class Prefixcall {
 	 */
 	void cancel() {
 		this.status = PrefixcallStatus.CANCELD;
-	}
-	
-	// ===================================================================================
-    //                                                                        Assist Logic
-    //                                                                        ============
-	private PrefixcallId issueId() {
-		return new PrefixcallId(999L); // TODO 実装する
 	}
 	
 	// ===================================================================================
